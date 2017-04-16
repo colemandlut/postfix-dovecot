@@ -66,7 +66,7 @@ sed -i -e "s/^#\!include auth-static\.conf\.ext/\!include auth-static\.conf\.ext
 RUN sed -i -e "s/^#mail_location =/mail_location = maildir:~\/Maildir/" /etc/dovecot/conf.d/10-mail.conf
 
 RUN sed -i -e "s/^userdb {/#userdb {/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
-sed -i -e "s/^  driver = passwd-file/#  driver = passwd-file/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
+sed -i -e "s/^#  driver = passwd-file/  driver = passwd-file/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
 sed -i -e "s/^  args = username_format=%u \/etc\/dovecot\/users/#  args = username_format=%u \/etc\/dovecot\/users/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
 sed -i -e "14s/^}/#}/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext
 

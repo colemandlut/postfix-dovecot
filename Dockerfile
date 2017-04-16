@@ -70,7 +70,8 @@ sed -i -e "12s/^  driver = passwd-file/#  driver = passwd-file/" /etc/dovecot/co
 sed -i -e "s/^  args = username_format=%u \/etc\/dovecot\/users/#  args = username_format=%u \/etc\/dovecot\/users/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
 sed -i -e "14s/^}/#}/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext
 
-RUN sed -i -e "21,24s/^#//" /etc/dovecot/conf.d/auth-static.conf.ext
+RUN sed -i -e "21,24s/^#//" /etc/dovecot/conf.d/auth-static.conf.ext && \
+sed -i -e"s/  args = uid=vmail gid=vmail home=\/home\/%u/  args = uid=vmail gid=vmail home=\/var\/spool\/virtual\/%d\/%n/" /etc/dovecot/conf.d/auth-static.conf.ext
 
 RUN sed -i -e "88,90s/#//" /etc/dovecot/conf.d/10-master.conf
 

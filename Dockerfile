@@ -6,7 +6,6 @@ ENV MAILDOMAIN localhost
 ENV TLS_CERT_FILE "/etc/pki/tls/certs/server.pem"
 ENV TLS_KEY_FILE "/etc/pki/tls/certs/server.pem"
 
-
 #************************************************************
 #*  Updateし、postfix、cyrus-imapd、cyrus-sasl-md5、cyrus-saslをインストールする                       *
 #************************************************************

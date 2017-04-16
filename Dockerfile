@@ -55,7 +55,8 @@ sed -i -e "s/^#  -o smtpd_sasl_auth_enable=yes/  -o smtpd_sasl_auth_enable=yes/"
 sed -i -e "s/^#  -o smtpd_client_restrictions=permit_sasl_authenticated,reject/  -o smtpd_client_restrictions=permit_sasl_authenticated,reject/" /etc/postfix/master.cf
 
 #/etc/dovecot/dovecot.confの変更
-RUN sed -i -e "s/^#protocols = imap pop3 lmtp/protocols = imap lmtp/" /etc/dovecot/dovecot.conf
+RUN sed -i -e "s/^#protocols = imap pop3 lmtp/protocols = imap lmtp/" /etc/dovecot/dovecot.conf && \
+sed -i -e "/^#listen = \*, ::/a listen = \*" /etc/dovecot/dovecot.conf
 
 #/etc/dovecot/conf.d/10-auth.confの変更
 RUN sed -i -e "s/^auth_mechanisms = plain/auth_mechanisms = plain login digest-md5 cram-md5/" /etc/dovecot/conf.d/10-auth.conf && \
@@ -66,7 +67,7 @@ sed -i -e "s/^#\!include auth-static\.conf\.ext/\!include auth-static\.conf\.ext
 RUN sed -i -e "s/^#mail_location =/mail_location = maildir:~\/Maildir/" /etc/dovecot/conf.d/10-mail.conf
 
 RUN sed -i -e "s/^userdb {/#userdb {/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
-sed -i -e "s/^#  driver = passwd-file/  driver = passwd-file/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
+sed -i -e "12s/^  driver = passwd-file/#  driver = passwd-file/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
 sed -i -e "s/^  args = username_format=%u \/etc\/dovecot\/users/#  args = username_format=%u \/etc\/dovecot\/users/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
 sed -i -e "14s/^}/#}/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext
 

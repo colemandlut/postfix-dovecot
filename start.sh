@@ -68,6 +68,8 @@ sed -i -e "s/^  #mail_plugins = \$mail_plugins/  mail_plugins = \$mail_plugins a
 
 sed -i -e "88,90s/#//" /etc/dovecot/conf.d/10-master.conf
 
+chown vmail:vmail /var/spool/virtual
+
 service postfix start
 service dovecot start
 

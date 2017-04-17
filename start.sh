@@ -71,3 +71,4 @@ sed -i -e "88,90s/#//" /etc/dovecot/conf.d/10-master.conf
 service postfix start
 service dovecot start
 
+/bin/bash

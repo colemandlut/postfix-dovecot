@@ -2,8 +2,8 @@ FROM centos:centos6
 
 MAINTAINER coleman <coleman_dlut@hotmail.com>
 
-ENV DOMAINNAME freemail.server-on.net
-ENV HOSTNAME localhost
+ENV MAIL_SERVER_DOMAIN_NAME freemail.server-on.net
+ENV MAIL_SERVER_NAME localhost
 ENV TLS_CERT_FILE "/etc/pki/tls/certs/server.pem"
 ENV TLS_KEY_FILE "/etc/pki/tls/certs/server.pem"
 
@@ -13,8 +13,8 @@ ENV TLS_KEY_FILE "/etc/pki/tls/certs/server.pem"
 RUN yum -y update && yum -y install postfix dovecot && yum clean all
 
 #/etc/postfix/main.cfの変更
-RUN sed -i -e "/^#myhostname = virtual\.domain\.tld/a myhostname = ${HOSTNAME}.${DOMAINNAME}" /etc/postfix/main.cf && \
-sed -i -e "/^#mydomain = domain.tld/a mydomain = ${DOMAINNAME}" /etc/postfix/main.cf && \
+RUN sed -i -e "/^#myhostname = virtual\.domain\.tld/a myhostname = ${MAIL_SERVER_NAME}.${MAIL_SERVER_DOMAIN_NAME}" /etc/postfix/main.cf && \
+sed -i -e "/^#mydomain = domain.tld/a mydomain = ${MAIL_SERVER_DOMAIN_NAME}" /etc/postfix/main.cf && \
 sed -i -e "s/^#myorigin = \$mydomain/myorigin = \$mydomain/" /etc/postfix/main.cf && \
 sed -i -e "s/^#inet_interfaces = all/inet_interfaces = all/" /etc/postfix/main.cf && \
 sed -i -e "s/^inet_interfaces = localhost/#inet_interfaces = localhost/" /etc/postfix/main.cf && \
@@ -31,7 +31,7 @@ sed -i -e "$ a smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_aut
 sed -i -e "$ a broken_sasl_auth_clients = yes" /etc/postfix/main.cf && \
 sed -i -e "$ a mailbox_size_limit = 0" /etc/postfix/main.cf && \
 sed -i -e "$ a message_size_limit = 0" /etc/postfix/main.cf && \
-sed -i -e "$ a virtual_mailbox_domains = ${DOMAINNAME}" /etc/postfix/main.cf && \
+sed -i -e "$ a virtual_mailbox_domains = ${MAIL_SERVER_DOMAIN_NAME}" /etc/postfix/main.cf && \
 sed -i -e "$ a virtual_mailbox_base = \/var\/spool\/virtual" /etc/postfix/main.cf && \
 sed -i -e "$ a virtual_mailbox_maps = hash:\/etc\/postfix\/vmailbox" /etc/postfix/main.cf && \
 sed -i -e "$ a virtual_minimum_uid = 100" /etc/postfix/main.cf && \

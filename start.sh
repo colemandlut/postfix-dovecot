@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/bash
 
 #/etc/postfix/main.cfの変更
 sed -i -e "/^#myhostname = virtual\.domain\.tld/a myhostname = ${MAIL_SERVER_NAME}.${MAIL_SERVER_DOMAIN_NAME}" /etc/postfix/main.cf && \
@@ -72,3 +72,7 @@ sed -i -e "/^  #setting_name = value/a \  autocreate = Trash" /etc/dovecot/conf.
 sed -i -e "s/^  #mail_plugins = \$mail_plugins/  mail_plugins = \$mail_plugins autocreate/" /etc/dovecot/conf.d/20-imap.conf
 
 sed -i -e "88,90s/#//" /etc/dovecot/conf.d/10-master.conf
+
+service postfix start
+service dovecot start
+

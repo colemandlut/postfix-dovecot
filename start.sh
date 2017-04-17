@@ -57,10 +57,10 @@ sed -i -e "14s/^}/#}/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext
 sed -i -e "21,24s/^#//" /etc/dovecot/conf.d/auth-static.conf.ext && \
 sed -i -e"s/  args = uid=vmail gid=vmail home=\/home\/%u/  args = uid=vmail gid=vmail home=\/var\/spool\/virtual\/%d\/%n/" /etc/dovecot/conf.d/auth-static.conf.ext
 
-sed -i -e "/^  #setting_name = value/a \  autosubscribe = Drafts" /etc/dovecot/conf.d/90-plugin.conf && \
-sed -i -e "/^  #setting_name = value/a \  autocreate = Drafts" /etc/dovecot/conf.d/90-plugin.conf && \
-sed -i -e "/^  #setting_name = value/a \  autosubscribe = Sent" /etc/dovecot/conf.d/90-plugin.conf && \
-sed -i -e "/^  #setting_name = value/a \  autocreate = Sent" /etc/dovecot/conf.d/90-plugin.conf && \
+sed -i -e "/^  #setting_name = value/a \  autosubscribe3 = Drafts" /etc/dovecot/conf.d/90-plugin.conf && \
+sed -i -e "/^  #setting_name = value/a \  autocreate3 = Drafts" /etc/dovecot/conf.d/90-plugin.conf && \
+sed -i -e "/^  #setting_name = value/a \  autosubscribe2 = Sent" /etc/dovecot/conf.d/90-plugin.conf && \
+sed -i -e "/^  #setting_name = value/a \  autocreate2 = Sent" /etc/dovecot/conf.d/90-plugin.conf && \
 sed -i -e "/^  #setting_name = value/a \  autosubscribe = Trash" /etc/dovecot/conf.d/90-plugin.conf && \
 sed -i -e "/^  #setting_name = value/a \  autocreate = Trash" /etc/dovecot/conf.d/90-plugin.conf
 

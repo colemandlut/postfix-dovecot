@@ -2,7 +2,8 @@ FROM centos:centos6
 
 MAINTAINER coleman <coleman_dlut@hotmail.com>
 
-ENV MAILDOMAIN localhost
+ENV DOMAINNAME freemail.server-on.net
+ENV HOSTNAME localhost
 ENV TLS_CERT_FILE "/etc/pki/tls/certs/server.pem"
 ENV TLS_KEY_FILE "/etc/pki/tls/certs/server.pem"
 
@@ -12,7 +13,7 @@ ENV TLS_KEY_FILE "/etc/pki/tls/certs/server.pem"
 RUN yum -y update && yum -y install postfix dovecot && yum clean all
 
 #/etc/postfix/main.cfの変更
-RUN sed -i -e "/^#myhostname = virtual\.domain\.tld/a myhostname = centos\.freemail\.server-on\.net" /etc/postfix/main.cf && \
+RUN sed -i -e "/^#myhostname = virtual\.domain\.tld/a myhostname = ${HOSTNAME}.${DOMAINNAME}" /etc/postfix/main.cf && \
 sed -i -e "/^#mydomain = domain.tld/a mydomain = freemail.server-on.net" /etc/postfix/main.cf && \
 sed -i -e "s/^#myorigin = \$mydomain/myorigin = \$mydomain/" /etc/postfix/main.cf && \
 sed -i -e "s/^#inet_interfaces = all/inet_interfaces = all/" /etc/postfix/main.cf && \
@@ -72,6 +73,15 @@ sed -i -e "14s/^}/#}/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext
 
 RUN sed -i -e "21,24s/^#//" /etc/dovecot/conf.d/auth-static.conf.ext && \
 sed -i -e"s/  args = uid=vmail gid=vmail home=\/home\/%u/  args = uid=vmail gid=vmail home=\/var\/spool\/virtual\/%d\/%n/" /etc/dovecot/conf.d/auth-static.conf.ext
+
+RUN sed -i -e "/^  #setting_name = value/a \  autosubscribe = Drafts" /etc/dovecot/conf.d/90-plugin.conf && \
+sed -i -e "/^  #setting_name = value/a \  autocreate = Drafts" /etc/dovecot/conf.d/90-plugin.conf && \
+sed -i -e "/^  #setting_name = value/a \  autosubscribe = Sent" /etc/dovecot/conf.d/90-plugin.conf && \
+sed -i -e "/^  #setting_name = value/a \  autocreate = Sent" /etc/dovecot/conf.d/90-plugin.conf && \
+sed -i -e "/^  #setting_name = value/a \  autosubscribe = Trash" /etc/dovecot/conf.d/90-plugin.conf && \
+sed -i -e "/^  #setting_name = value/a \  autocreate = Trash" /etc/dovecot/conf.d/90-plugin.conf
+
+RUN sed -i -e "s/^  #mail_plugins = \$mail_plugins/  mail_plugins = \$mail_plugins autocreate/" /etc/dovecot/conf.d/20-imap.conf
 
 RUN sed -i -e "88,90s/#//" /etc/dovecot/conf.d/10-master.conf
 

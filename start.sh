@@ -27,11 +27,6 @@ sed -i -e "$ a virtual_uid_maps = static:500" /etc/postfix/main.cf && \
 sed -i -e "$ a virtual_gid_maps = static:500" /etc/postfix/main.cf && \
 sed -i -e "$ a virtual_mailbox_limit = 0" /etc/postfix/main.cf
 
-useradd vmail && \
-sed -i -e "s/\/home\/vmail:\/bin\/bash/\/var\/spool\/virtual:\/sbin\/nologin/" /etc/passwd && \
-mkdir /var/spool/virtual && \
-chown vmail:vmail /var/spool/virtual
-
 #/etc/postfix/master.cfの変更
 sed -i -e "s/^#submission inet n/submission inet n/" /etc/postfix/master.cf && \
 sed -i -e "s/^#  -o smtpd_tls_security_level=encrypt/  -o smtpd_tls_security_level=may/" /etc/postfix/master.cf && \

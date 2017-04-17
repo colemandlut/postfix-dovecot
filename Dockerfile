@@ -85,4 +85,6 @@ RUN sed -i -e "s/^  #mail_plugins = \$mail_plugins/  mail_plugins = \$mail_plugi
 
 RUN sed -i -e "88,90s/#//" /etc/dovecot/conf.d/10-master.conf
 
+RUN chown vmail:vmail /var/spool/virtual/ && chmod 700 /var/spool/virtual/
+
 CMD bash -c "/sbin/service postfix start && /sbin/service dovecot start && /bin/bash"

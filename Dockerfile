@@ -14,8 +14,7 @@ RUN yum -y update && yum -y install postfix dovecot && yum clean all
 
 RUN useradd vmail && \
 sed -i -e "s/\/home\/vmail:\/bin\/bash/\/var\/spool\/virtual:\/sbin\/nologin/" /etc/passwd && \
-mkdir /var/spool/virtual && \
-chown vmail:vmail /var/spool/virtual
+mkdir /var/spool/virtual
 
 ADD start.sh /opt/start.sh
 RUN chmod 700 /opt/start.sh

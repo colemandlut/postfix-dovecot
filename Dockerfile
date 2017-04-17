@@ -12,12 +12,15 @@ ENV TLS_KEY_FILE "/etc/pki/tls/certs/server.pem"
 #************************************************************
 RUN yum -y update && yum -y install postfix dovecot && yum clean all
 
-RUN chown vmail:vmail /var/spool/virtual/ && chmod 700 /var/spool/virtual/
+RUN useradd vmail && \
+sed -i -e "s/\/home\/vmail:\/bin\/bash/\/var\/spool\/virtual:\/sbin\/nologin/" /etc/passwd && \
+mkdir /var/spool/virtual && \
+chown vmail:vmail /var/spool/virtual
 
 ADD start.sh /opt/start.sh
 RUN chmod 700 /opt/start.sh
 
-CMD /opt/run.sh
+CMD /opt/start.sh
 
 
 

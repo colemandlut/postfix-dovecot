@@ -17,8 +17,8 @@ sed -i -e "$ a smtpd_sasl_path = private/auth" /etc/postfix/main.cf && \
 sed -i -e "$ a smtpd_sasl_local_domain = \$mydomain" /etc/postfix/main.cf && \
 sed -i -e "$ a smtpd_sasl_security_options = noanonymous" /etc/postfix/main.cf && \
 sed -i -e "$ a smtpd_use_tls = yes" /etc/postfix/main.cf && \
-sed -i -e "$ a smtpd_tls_cert_file = \/etc\/pki\/tls\/certs\/server.pem" /etc/postfix/main.cf && \
-sed -i -e "$ a smtpd_tls_key_file = \/etc\/pki\/tls\/certs\/server.pem " /etc/postfix/main.cf && \
+sed -i -e "$ a smtpd_tls_cert_file = ${TLS_CERT_FILE}" /etc/postfix/main.cf && \
+sed -i -e "$ a smtpd_tls_key_file = ${TLS_KEY_FILE}" /etc/postfix/main.cf && \
 sed -i -e "$ a smtpd_tls_session_cache_database = btree:\/var\/lib\/postfix\/smtpd_scache" /etc/postfix/main.cf && \
 sed -i -e "$ a smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination" /etc/postfix/main.cf && \
 sed -i -e "$ a broken_sasl_auth_clients = yes" /etc/postfix/main.cf && \
@@ -75,8 +75,8 @@ sed -i -e "88,90s/#//" /etc/dovecot/conf.d/10-master.conf
 
 sed -i -e "s/^ssl_cert = <\/etc\/pki\/dovecot\/certs\/dovecot.pem/#ssl_cert = <\/etc\/pki\/dovecot\/certs\/dovecot.pem/" /etc/dovecot/conf.d/10-ssl.conf
 sed -i -e "s/^ssl_key = <\/etc\/pki\/dovecot\/private\/dovecot.pem/#ssl_key = <\/etc\/pki\/dovecot\/private\/dovecot.pem/" /etc/dovecot/conf.d/10-ssl.conf
-sed -i -e "/^#ssl_key = <\/etc\/pki\/dovecot\/private\/dovecot.pem/a ssl_cert = <\/etc\/pki\/tls\/certs\/server.pem" /etc/dovecot/conf.d/10-ssl.conf
-sed -i -e "/^ssl_cert = <\/etc\/pki\/tls\/certs\/server.pem/a ssl_key = <\/etc\/pki\/tls\/certs\/server.pem" /etc/dovecot/conf.d/10-ssl.conf
+sed -i -e "/^#ssl_key = <\/etc\/pki\/dovecot\/private\/dovecot.pem/a ssl_cert = <${TLS_CERT_FILE}" /etc/dovecot/conf.d/10-ssl.conf
+sed -i -e "/^ssl_cert = <${TLS_CERT_FILE}/a ssl_key = <${TLS_KEY_FILE}" /etc/dovecot/conf.d/10-ssl.conf
 
 chown vmail:vmail /var/spool/virtual
 

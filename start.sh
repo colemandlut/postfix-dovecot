@@ -75,8 +75,8 @@ sed -i -e "88,90s/#//" /etc/dovecot/conf.d/10-master.conf
 
 sed -i -e "s/^ssl_cert = <\/etc\/pki\/dovecot\/certs\/dovecot.pem/#ssl_cert = <\/etc\/pki\/dovecot\/certs\/dovecot.pem/" /etc/dovecot/conf.d/10-ssl.conf
 sed -i -e "s/^ssl_key = <\/etc\/pki\/dovecot\/private\/dovecot.pem/#ssl_key = <\/etc\/pki\/dovecot\/private\/dovecot.pem/" /etc/dovecot/conf.d/10-ssl.conf
+sed -i -e "/^#ssl_key = <\/etc\/pki\/dovecot\/private\/dovecot.pem/a ssl_key = <${TLS_KEY_FILE}" /etc/dovecot/conf.d/10-ssl.conf
 sed -i -e "/^#ssl_key = <\/etc\/pki\/dovecot\/private\/dovecot.pem/a ssl_cert = <${TLS_CERT_FILE}" /etc/dovecot/conf.d/10-ssl.conf
-sed -i -e "/^ssl_cert = <${TLS_CERT_FILE}/a ssl_key = <${TLS_KEY_FILE}" /etc/dovecot/conf.d/10-ssl.conf
 
 chown vmail:vmail /var/spool/virtual
 

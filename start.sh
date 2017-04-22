@@ -54,9 +54,10 @@ sed -i -e "s/^#\!include auth-static\.conf\.ext/\!include auth-static\.conf\.ext
 
 sed -i -e "s/^#mail_location =/mail_location = maildir:~\/Maildir/" /etc/dovecot/conf.d/10-mail.conf
 
+sed -i -e "s/^  args = scheme=CRYPT username_format=%u \/etc\/dovecot\/users/  args = scheme=CRYPT username_format=%u \/Maildir\/mailconf\/users/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
 sed -i -e "s/^userdb {/#userdb {/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
 sed -i -e "12s/^  driver = passwd-file/#  driver = passwd-file/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
-sed -i -e "s/^  args = username_format=%u \/etc\/dovecot\/users/#  args = username_format=%u \/Maildir\/mailconf\/users/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
+sed -i -e "s/^  args = username_format=%u \/etc\/dovecot\/users/#  args = username_format=%u \/etc\/dovecot\/users/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
 sed -i -e "14s/^}/#}/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext
 
 sed -i -e "21,24s/^#//" /etc/dovecot/conf.d/auth-static.conf.ext && \

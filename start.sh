@@ -25,7 +25,7 @@ sed -i -e "$ a mailbox_size_limit = 0" /etc/postfix/main.cf && \
 sed -i -e "$ a message_size_limit = 0" /etc/postfix/main.cf && \
 sed -i -e "$ a virtual_mailbox_domains = ${MAIL_SERVER_DOMAIN_NAME}" /etc/postfix/main.cf && \
 sed -i -e "$ a virtual_mailbox_base = \/var\/spool\/virtual" /etc/postfix/main.cf && \
-sed -i -e "$ a virtual_mailbox_maps = hash:\/etc\/postfix\/vmailbox" /etc/postfix/main.cf && \
+sed -i -e "$ a virtual_mailbox_maps = hash:\/Maildir\/mailconf\/vmailbox" /etc/postfix/main.cf && \
 sed -i -e "$ a virtual_minimum_uid = 100" /etc/postfix/main.cf && \
 sed -i -e "$ a virtual_uid_maps = static:500" /etc/postfix/main.cf && \
 sed -i -e "$ a virtual_gid_maps = static:500" /etc/postfix/main.cf && \
@@ -55,7 +55,7 @@ sed -i -e "s/^#mail_location =/mail_location = maildir:~\/Maildir/" /etc/dovecot
 
 sed -i -e "s/^userdb {/#userdb {/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
 sed -i -e "12s/^  driver = passwd-file/#  driver = passwd-file/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
-sed -i -e "s/^  args = username_format=%u \/etc\/dovecot\/users/#  args = username_format=%u \/etc\/dovecot\/users/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
+sed -i -e "s/^  args = username_format=%u \/etc\/dovecot\/users/#  args = username_format=%u \/Maildir\/mailconf\/users/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext && \
 sed -i -e "14s/^}/#}/" /etc/dovecot/conf.d/auth-passwdfile.conf.ext
 
 sed -i -e "21,24s/^#//" /etc/dovecot/conf.d/auth-static.conf.ext && \

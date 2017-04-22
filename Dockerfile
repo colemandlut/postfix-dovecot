@@ -3,7 +3,6 @@ FROM centos:centos6
 MAINTAINER coleman <coleman_dlut@hotmail.com>
 
 ENV MAIL_SERVER_DOMAIN_NAME freemail.server-on.net
-ENV MAIL_SERVER_NAME localhost
 ENV TLS_CERT_FILE "/etc/pki/tls/certs/server.pem"
 ENV TLS_KEY_FILE "/etc/pki/tls/certs/server.pem"
 

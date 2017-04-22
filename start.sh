@@ -1,12 +1,13 @@
 #!/bin/bash
 
 #/etc/postfix/main.cfの変更
-sed -i -e "/^#myhostname = virtual\.domain\.tld/a myhostname = ${MAIL_SERVER_NAME}.${MAIL_SERVER_DOMAIN_NAME}" /etc/postfix/main.cf && \
+sed -i -e "/^#myhostname = virtual\.domain\.tld/a myhostname = ${MAIL_SERVER_DOMAIN_NAME}" /etc/postfix/main.cf && \
 sed -i -e "/^#mydomain = domain.tld/a mydomain = ${MAIL_SERVER_DOMAIN_NAME}" /etc/postfix/main.cf && \
 sed -i -e "s/^#myorigin = \$mydomain/myorigin = \$mydomain/" /etc/postfix/main.cf && \
 sed -i -e "s/^#inet_interfaces = all/inet_interfaces = all/" /etc/postfix/main.cf && \
 sed -i -e "s/^inet_interfaces = localhost/#inet_interfaces = localhost/" /etc/postfix/main.cf && \
 sed -i -e "s/^inet_protocols = all/inet_protocols = ipv4/" /etc/postfix/main.cf && \
+sed -i -e "s/^mydestination = \$myhostname, localhost.\$mydomain, localhost/mydestination = localhost.\$mydomain, localhost/" /etc/postfix/main.cf && \
 sed -i -e "s/^#home_mailbox = Maildir\//home_mailbox = Maildir\//" /etc/postfix/main.cf && \
 sed -i -e "/^#smtpd_banner = \$myhostname ESMTP \$mail_name (\$mail_version)/a smtpd_banner = \$myhostname ESMTP unknown" /etc/postfix/main.cf && \
 sed -i -e "$ a \ " /etc/postfix/main.cf && \
